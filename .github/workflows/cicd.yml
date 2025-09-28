@@ -38,7 +38,7 @@ jobs:
       - name: Installing git leaks
         run: sudo apt install gitleaks -y 
       - name: Gitleaks code scan
-        run: gitleaks source . -r gitleaksreport.json -f json
+        run: gitleaks detect -s . -r gitleaksreport.json -f json
   Test:
     needs: security-check
     runs-on: runner01
