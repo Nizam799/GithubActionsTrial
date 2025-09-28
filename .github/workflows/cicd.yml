@@ -1,0 +1,59 @@
+name: CI pipeline
+
+on: 
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  Build-code:
+    runs-on: runner01
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: Setting up java sdk
+        uses: actions/setup-java@v4
+        with: 
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build packge
+        run: mvn package
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Builtcode-jar
+          path: target/*.jar
+
+  security-check:
+    needs: Build-code
+    runs-on: runner01
+    steps:
+      - uses: actions/checkout@v2
+      - name: Installing git leaks
+        run: sudo apt install gitleaks -y 
+      - name: Gitleaks code scan
+        run: gileaks source . -r gitleaksreport.json -f json
+  Test:
+    needs: security-check
+    runs-on: runner01
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: Run unit tests
+        run: mvn test
+  Build-image:
+    needs: Test
+    runs-on: runner01
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      - name: Dowload JAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Builtcode-jar
+          path: appp
+
+
+
