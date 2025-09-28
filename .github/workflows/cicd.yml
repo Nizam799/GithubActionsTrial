@@ -41,6 +41,12 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v2
+      - name: setup javasdk
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
       - name: Run unit tests
         run: mvn test
   Build-image:
