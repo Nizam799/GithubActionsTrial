@@ -49,7 +49,7 @@ jobs:
           cache: maven
       - name: Run unit tests
         run: mvn test
-  Build-image:
+  Build-Push-image:
     needs: Test
     runs-on: runner01
     steps:
@@ -74,7 +74,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: nizam799/javaapp:v2
+          tags: nizam799/javaapp:v3
           file: ./Dockerfile
 
 
