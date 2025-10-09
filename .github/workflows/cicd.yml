@@ -52,6 +52,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: nizam799/javapplication:v1
+          tags: nizam799/javapplication:v3
           file: ./Dockerfile
 
