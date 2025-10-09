@@ -25,6 +25,11 @@ jobs:
         with:
           name: BuildJar
           path: target/*.jar
+  security-check:
+    runs-on: runner01
+    steps:
+      - name: security check
+        uses: nizam799/Githubactionstrial/actions/my-composite-action@v2
 
   DockerBuildAndPush:
     needs: Build-code
