@@ -1,0 +1,27 @@
+name: CiPipeline
+
+on:
+    push:
+        branches: ["main"]
+    pull_request:
+        branches: ["main"]
+
+jobs:
+    Build-code:
+        runs-on: runner01
+        steps:
+            - name: checkout
+              uses: actions/checkout@v2
+            - name: setup java
+              uses: actions/setup-java@v4
+              with:
+                java-version: '17'
+                distribution: 'temurin'
+                cache: maven
+            - name: Build package
+              run: mvn package
+            - name: upload artifact
+              uses: actions/upload-artifact@v4
+              with:
+                name: Buildfile
+                path: target/*.jar
