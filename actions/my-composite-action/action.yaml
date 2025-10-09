@@ -1,0 +1,21 @@
+name: "Security Check"
+description: "Run Gitleaks scan on code"
+author: "Nizam"
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Gitleaks
+      run: sudo apt install gitleaks -y
+      shell: bash
+
+    - name: Run Gitleaks scan
+      run: gitleaks detect -s . -r gitleaksreport.json -f json
+      shell: bash
+
+outputs:
+  report-file:
+    description: Path to the gitleaks report
+    value: gitleaksreport.json
