@@ -33,8 +33,3 @@ build/
 ### VS Code ###
 .vscode/
 
-main.tf
-terraform.tfstate
-terraform.tfvars
-variables.tfterraform.tfstate.backup
-.terraform.lock.hcl
